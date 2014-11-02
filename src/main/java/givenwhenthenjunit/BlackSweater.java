@@ -1,4 +1,4 @@
 package givenwhenthenjunit;
 
-public class BlackSweater {
+public class BlackSweater implements Item {
 }

@@ -3,7 +3,6 @@ package givenwhenthenjunit;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * In order to keep track of stock
@@ -35,12 +34,29 @@ public class ReturnsGoToStockStoryTest {
 
     @Test
     public void replacedItemsShouldBeReturnedToStock() {
+
+        Inventory inventory = new Inventory();
+
         // Given that a customer buys a blue garment
+        BlueGarment blueGarment = new BlueGarment();
+        inventory.sellItem(blueGarment, new Customer());
+
         // And I have two blue garments in stock
+        inventory.addItem(new BlueGarment());
+        inventory.addItem(new BlueGarment());
+
         // And three black garments in stock.
+        inventory.addItem(new BlackGarment());
+        inventory.addItem(new BlackGarment());
+        inventory.addItem(new BlackGarment());
+
         // When he returns the garment for a replacement in black,
+        inventory.replaceItem(blueGarment, inventory.get(BlackGarment.class));
+
         // Then I should have three blue garments in stock
+        assertEquals(3, inventory.countStock(BlueGarment.class));
+
         // And two black garments in stock
-        fail();
+        assertEquals(2, inventory.countStock(BlueGarment.class));
     }
 }
