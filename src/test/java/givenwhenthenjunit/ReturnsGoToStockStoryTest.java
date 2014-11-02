@@ -1,5 +1,6 @@
 package givenwhenthenjunit;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,14 +12,21 @@ import static org.junit.Assert.assertEquals;
  */
 public class ReturnsGoToStockStoryTest {
 
+    private Inventory inventory;
+    private Customer customer;
+
+    @Before
+    public void setUp() throws Exception {
+        inventory = new Inventory();
+        customer = new Customer();
+    }
+
     @Test
     public void refundedItemsShouldBeReturnedToStock() {
 
-        Inventory inventory = new Inventory();
-
         // Given a customer previously bought a black sweater from me
         BlackSweater blackSweater = new BlackSweater();
-        inventory.sellItem(blackSweater, new Customer());
+        inventory.sellItem(blackSweater, customer);
 
         // And I currently have three black sweaters left in stock
         inventory.addItem(new BlackSweater());
@@ -35,11 +43,9 @@ public class ReturnsGoToStockStoryTest {
     @Test
     public void replacedItemsShouldBeReturnedToStock() {
 
-        Inventory inventory = new Inventory();
-
         // Given that a customer buys a blue garment
         BlueGarment blueGarment = new BlueGarment();
-        inventory.sellItem(blueGarment, new Customer());
+        inventory.sellItem(blueGarment, customer);
 
         // And I have two blue garments in stock
         inventory.addItem(new BlueGarment());
@@ -57,6 +63,6 @@ public class ReturnsGoToStockStoryTest {
         assertEquals(3, inventory.countStock(BlueGarment.class));
 
         // And two black garments in stock
-        assertEquals(2, inventory.countStock(BlueGarment.class));
+        assertEquals(2, inventory.countStock(BlackGarment.class));
     }
 }
