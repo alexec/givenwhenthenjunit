@@ -2,6 +2,7 @@ package givenwhenthenjunit;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -13,11 +14,23 @@ public class ReturnsGoToStockStoryTest {
 
     @Test
     public void refundedItemsShouldBeReturnedToStock() {
+
+        Inventory inventory = new Inventory();
+
         // Given a customer previously bought a black sweater from me
+        BlackSweater blackSweater = new BlackSweater();
+        inventory.sellItem(blackSweater, new Customer());
+
         // And I currently have three black sweaters left in stock
+        inventory.addItem(new BlackSweater());
+        inventory.addItem(new BlackSweater());
+        inventory.addItem(new BlackSweater());
+
         // When he returns the sweater for a refund
+        inventory.returnItem(blackSweater);
+
         // Then I should have four black sweaters in stock
-        fail();
+        assertEquals(4, inventory.countStock(BlackSweater.class));
     }
 
     @Test
